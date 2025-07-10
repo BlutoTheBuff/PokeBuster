@@ -178,7 +178,23 @@
 
         .weakness-group h4 {
             margin-bottom: 10px;
-            color: var(--text-light);
+        }
+
+        /* Weakness group colors */
+        .weakness-group h4[data-multiplier="4x"] {
+            color: #00e503;
+        }
+        .weakness-group h4[data-multiplier="2x"] {
+            color: #009b02;
+        }
+        .weakness-group h4[data-multiplier="0.5x"] {
+            color: #fdd835;
+        }
+        .weakness-group h4[data-multiplier="0.25x"] {
+            color: #b71c1c;
+        }
+        .weakness-group h4[data-multiplier="0x"] {
+            color: #bdbdbd;
         }
 
         .loading {
@@ -488,11 +504,11 @@
                 const weaknesses = calculateWeaknesses(damageRelations);
 
                 // Create weakness groups
-                createWeaknessGroup('4x Damage', weaknesses['4x']);
-                createWeaknessGroup('2x Damage', weaknesses['2x']);
-                createWeaknessGroup('1/2x Damage', weaknesses['0.5x']);
-                createWeaknessGroup('1/4x Damage', weaknesses['0.25x']);
-                createWeaknessGroup('0x Damage', weaknesses['0x']);
+                createWeaknessGroup('4x Damage', weaknesses['4x'], '4x');
+                createWeaknessGroup('2x Damage', weaknesses['2x'], '2x');
+                createWeaknessGroup('1/2x Damage', weaknesses['0.5x'], '0.5x');
+                createWeaknessGroup('1/4x Damage', weaknesses['0.25x'], '0.25x');
+                createWeaknessGroup('0x Damage', weaknesses['0x'], '0x');
 
                 // Evolution chain
                 displayEvolutionChain(evolutionData.chain);
@@ -547,7 +563,7 @@
                 return weaknesses;
             }
 
-            function createWeaknessGroup(title, types) {
+            function createWeaknessGroup(title, types, multiplier) {
                 if (!types || types.length === 0) return;
 
                 const groupDiv = document.createElement('div');
@@ -555,6 +571,7 @@
 
                 const titleElement = document.createElement('h4');
                 titleElement.textContent = title;
+                titleElement.setAttribute('data-multiplier', multiplier);
                 groupDiv.appendChild(titleElement);
 
                 const typesContainer = document.createElement('div');
